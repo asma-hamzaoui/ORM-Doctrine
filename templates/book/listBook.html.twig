@@ -1,0 +1,65 @@
+{# templates/list.html.twig #}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des livres</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<!-- Header Section -->
+<header class="bg-warning text-white text-center py-3 mb-4">
+    <h1 class="display-4">Bienvenue à la Liste des livres</h1>
+</header>
+
+<!-- Main Content -->
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2 class="text-center mb-4">Liste des livres</h2>
+
+            {% if books is not defined or books is empty %}
+                <div class="alert alert-warning" role="alert">
+                    <h4 class="alert-heading">Aucun livre disponible.</h4>
+                </div>
+            {% else %}
+                <!-- Responsive Table -->
+                <div class="table-responsive">
+                    <table class="table table-dark table-striped table-bordered text-center">
+                        <thead class="thead-light">
+                        <tr>
+                            <th>Title</th>
+                            <th>Picture</th>
+                            <th>Nombre pages</th>
+                            <th>Author de livre</th>
+                            <th>Delete livre</th>
+                            <th>Update livre</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for book in books %}
+                            <tr>
+                                <td>{{ book.title | upper }}</td>
+                                <td>{{ book.picture }}</td>
+                                <td>{{ book.nbrPages }}</td>
+                                <td>{{ book.author.username }}</td>
+                                <td><a href="{{ path('app_deleteBooks', { id: book.id }) }}">Delete</a>
+                                <td><a href="{{ path('app_updateBook', { id: book.id }) }}">Update</a>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
