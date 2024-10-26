@@ -45,13 +45,17 @@ class AuthorController extends AbstractController
     }
 
     #[Route('/authorList', name: 'app_authorList', methods:['GET'])]
-    public function AuthorList(): Response
+    public function AuthorList(Request $request): Response
     {
-        // Récupérer la liste des auteurs
-        $authors = $this->authorRepo->findAllAuthors(); 
+        $email = $request -> get('search');
+        if ($email) {
+            $author = $this -> authorRepo -> findAuthorByEmail($email);
+        }else{
+            $author = $this -> authorRepo -> findAllAuthors();
+        }
 
         // Rendre la vue avec la liste des auteurs
-        return $this->render('author/authorList.html.twig', [
+        return $this->render( 'author/authorList.html.twig', [
             'authors' => $authors,
         ]);
     }

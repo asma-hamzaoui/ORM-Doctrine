@@ -29,6 +29,15 @@ class AuthorRepository extends ServiceEntityRepository
    return $this->find($id); // Utilise la méthode find de Doctrine
 }
 
+public function findAuthorByEmail($val): ?array
+{
+    return $this->createQueryBuilder( alias: 'e')
+       ->where( predicates: 'e.email LIKE :val')
+       ->setParameter(key: 'val', value: '%' . $val . '%')
+       ->getQuery()
+       ->getResult();
+}
+
 
 //    /**
 //     * @return Author[] Returns an array of Author objects
